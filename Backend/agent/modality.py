@@ -2,7 +2,7 @@ import os
 from typing import Any
 import rasterio
 from PIL import Image
-
+import numpy as np
 
 OPTICAL = "optical"
 SAR = "sar"
@@ -221,40 +221,36 @@ def detect_modality(
 
             with Image.open(image_path) as image:
 
+                arr = np.array(image)
+
                 # RGB/RGBA images are generally visual/optical
                 # imagery, but we still use conservative wording.
-                if image.mode in {
-                    "RGB",
-                    "RGBA",
-                    "L",
-                    "LA",
-                }:
-
-                    if image.mode in {"RGB", "RGBA"}:
-                        return {
-                            "modality": OPTICAL,
-                            "confidence": 0.80,
-                            "reason": (
-                                "RGB/RGBA image format is "
-                                "consistent with optical imagery."
-                            ),
-                            "bands": (
-                                3
-                                if image.mode == "RGB"
-                                else 4
-                            ),
-                        }
-
-                    return {
-                        "modality": UNKNOWN,
-                        "confidence": 0.0,
+                dict1 =  {
+                        "modality": SAR,
+                        "confidence": 0.80,
                         "reason": (
-                            "Grayscale image does not provide "
-                            "enough evidence to distinguish "
-                            "SAR from single-band optical data."
+                            "RGB/RGBA image format is "
+                            "consistent with optical imagery."
                         ),
-                        "bands": 1,
+                        "bands": (
+                            3
+                            if image.mode == "RGB"
+                            else 4
+                        ),
                     }
+                
+                if image.mode == "L" :
+                    dict1["modality"] = SAR
+                    return dict1
+                else:
+                    r, g, b = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2]
+
+                    if np.allclose(r, g, atol=5) and np.allclose(g, b, atol=5):
+                        dict1['modality'] = SAR
+
+                    else:
+                        dict1["modality"] = OPTICAL
+                        return dict1
 
         except Exception as error:
 

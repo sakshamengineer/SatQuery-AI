@@ -1,3 +1,8 @@
+from pathlib import Path
+import sys
+PROJECT_ROOT = (Path(__file__).resolve().parent.parent)
+sys.path.append(str(PROJECT_ROOT))
+
 from agent.controller import SatQueryController
 
 
@@ -11,8 +16,8 @@ def main():
     result = controller.analyze(
     query="Analyze these optical and SAR images together.",
     images=[
-        "data/samples/test.jpg",
-        "data/samples/test.tiff",
+        "data/samples/opt1.png",
+        "data/samples/sar1.png",
     ],
     modalities=[
         "optical",
