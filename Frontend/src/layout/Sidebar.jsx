@@ -16,7 +16,7 @@ const Sidebar = () => {
     const menuItems = [
         { path: "/", label: "Dashboard", icon: LayoutDashboard },
         { path: "/analysis/new", label: "New Analysis", icon: Sparkles },
-        { path: "/history", label: "History", icon: Clock3 },
+        { path: "/history", label: "History", icon: Clock3, disabled: true },
         { path: "/reports", label: "Reports", icon: FileText, disabled: true },
         { path: "/datasets", label: "Datasets", icon: FolderOpen, disabled: true },
         { path: "/model-hub", label: "Model Hub", icon: Grid2X2, disabled: true }

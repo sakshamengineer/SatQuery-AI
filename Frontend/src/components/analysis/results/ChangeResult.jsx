@@ -4,11 +4,13 @@ import {
     CheckCircle2,
     Columns2
 } from 'lucide-react'
+import { getDisplayConfidence } from '../../../utils/Confidence'
 
 const TABS = ["Change Map", "Before", "After", "Side by Side"]
 
 const ChangeResult = (props) => {
     const data = props.result || {}
+    const confidence = getDisplayConfidence(data)
 
     const images = data.images || []
     const evidence = data.evidence || []
@@ -166,7 +168,7 @@ const ChangeResult = (props) => {
                                 <p className='text-xs text-slate-500'>Routing Confidence</p>
                             </div>
                             <p className='mt-2 text-xl font-semibold text-purple-300'>
-                                {Math.round((data.routing_confidence || 0) * 100)}%
+                                {Math.round(confidence * 100)}%
                             </p>
                             {data.routing_reason && (
                                 <p className='mt-3 text-xs leading-5 text-slate-500'>{data.routing_reason}</p>

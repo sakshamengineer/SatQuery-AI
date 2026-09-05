@@ -2,9 +2,11 @@ import {
     Layers,
     Activity
 } from 'lucide-react'
+import { getDisplayConfidence } from '../../../utils/Confidence'
 
 const OpticalSARResult = (props) => {
     const data = props.result || {}
+    const confidence = getDisplayConfidence(data)
 
     const images =
         data.images || []
@@ -113,17 +115,13 @@ const OpticalSARResult = (props) => {
 
                     <section className='space-y-5'>
 
-                        <div className='rounded-2xl border border-white/10 bg-white/[0.03] p-5'>
+                        <div className='rounded-2xl border border-white/10 bg-white/3 p-5'>
                             <p className='text-xs text-slate-500'>
                                 Confidence
                             </p>
 
                             <p className='mt-2 text-2xl font-semibold text-cyan-300'>
-                                {Math.round(
-                                    (data.confidence ||
-                                        0) * 100
-                                )}
-                                %
+                                {Math.round(confidence * 100)}%
                             </p>
 
                             <p className='mt-5 text-xs text-slate-500'>

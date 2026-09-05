@@ -67,18 +67,6 @@ const TopBar = ({ crumbs = [], activeStep = null }) => {
                         ))}
                     </div>
                 )}
-
-                <button
-                    type="button"
-                    className="relative rounded-lg p-2 text-slate-400 hover:bg-white/5 hover:text-white"
-                >
-                    <Bell size={17} />
-                    <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-cyan-400" />
-                </button>
-
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-linear-to-br from-cyan-400 to-blue-600 text-xs font-semibold text-white">
-                    AP
-                </div>
             </div>
         </div>
     )

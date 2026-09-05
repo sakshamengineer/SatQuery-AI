@@ -124,7 +124,7 @@ const DashboardContent = () => {
                     </div>
 
                     <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-                        {getGreeting()}, Aman
+                        {getGreeting()}
                     </h1>
 
                     <p className="mt-1 text-sm text-slate-400">
@@ -135,7 +135,7 @@ const DashboardContent = () => {
                 <div className="flex flex-wrap gap-2">
                     <button
                         onClick={fetchDashboard}
-                        className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/3 px-3 py-2 text-sm text-slate-300 transition hover:bg-white/[0.07] hover:text-white"
+                        className="flex items-center cursor-pointer gap-2 rounded-xl border border-white/10 bg-white/3 px-3 py-2 text-sm text-slate-300 transition hover:bg-white/[0.07] hover:text-white"
                     >
                         <RefreshCw
                             size={16}
@@ -146,7 +146,7 @@ const DashboardContent = () => {
 
                     <button
                         onClick={() => navigate("/analysis/new")}
-                        className="flex items-center gap-2 rounded-xl bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-400"
+                        className="flex items-center gap-2 rounded-xl cursor-pointer bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-400"
                     >
                         <PlusIcon />
                         New Analysis
@@ -170,7 +170,7 @@ const DashboardContent = () => {
 
                     <button
                         onClick={fetchDashboard}
-                        className="w-fit rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-slate-300 hover:bg-white/10"
+                        className="w-fit rounded-lg cursor-pointer border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-slate-300 hover:bg-white/10"
                     >
                         Try Again
                     </button>
@@ -313,7 +313,7 @@ const DashboardContent = () => {
 
                         <button
                             onClick={() => navigate("/analysis/new")}
-                            className="mt-6 flex w-fit items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-medium text-slate-900 transition hover:bg-slate-200"
+                            className="mt-6 flex w-fit items-center cursor-pointer gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-medium text-slate-900 transition hover:bg-slate-200"
                         >
                             <Play size={16} />
                             Start Analysis
@@ -334,12 +334,6 @@ const DashboardContent = () => {
                             </p>
                         </div>
 
-                        <button
-                            onClick={() => navigate("/history")}
-                            className="text-xs text-cyan-300 hover:text-cyan-200"
-                        >
-                            View All
-                        </button>
                     </div>
 
                     {loading ? (
@@ -426,7 +420,9 @@ const DashboardContent = () => {
                         <QuickAction
                             icon={Clock3}
                             label="View History"
-                            onClick={() => navigate("/history")}
+                            onClick={() => navigate("/history") }
+                            disabled
+
                         />
                         <QuickAction icon={FolderOpen} label="Datasets" disabled />
                         <QuickAction icon={Grid2X2} label="Model Hub" disabled />
@@ -449,14 +445,6 @@ const DashboardContent = () => {
                                 Latest satellite intelligence runs
                             </p>
                         </div>
-
-                        <button
-                            onClick={() => navigate("/history")}
-                            className="flex items-center gap-1 text-xs text-cyan-300 hover:text-cyan-200"
-                        >
-                            View All
-                            <ArrowUpRight size={14} />
-                        </button>
                     </div>
 
                     {loading ? (

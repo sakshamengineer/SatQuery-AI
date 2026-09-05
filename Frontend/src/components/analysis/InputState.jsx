@@ -41,7 +41,6 @@ const MODALITY_STYLES = {
 }
 
 const TASK_OPTIONS = [
-    { value: "auto", label: "Auto (Recommended)" },
     { value: "vqa", label: "Visual Question Answering" },
     { value: "captioning", label: "Image Captioning" },
     { value: "change_detection", label: "Change Detection" },
@@ -637,7 +636,7 @@ const InputState = (props) => {
                         </section>
 
                         {/* Question card */}
-                        <section className='rounded-2xl border border-white/10 bg-linear-to-b from-white/[0.05] to-white/[0.02] p-5 shadow-xl shadow-black/20 sm:p-7'>
+                        <section className='rounded-2xl border border-white/10 bg-linear-to-b from-white/5 to-white/2 p-5 shadow-xl shadow-black/20 sm:p-7'>
                             <div className='mb-4 flex items-center justify-between'>
                                 <div className='flex items-center gap-2.5'>
                                     <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-purple-400/10 text-purple-300'>
@@ -700,94 +699,12 @@ const InputState = (props) => {
                             </div>
 
                             <div className='mt-3 flex flex-col gap-2.5 sm:flex-row sm:items-center'>
-                                <div className='flex gap-2'>
-                                    <div className='relative'>
-                                        <button
-                                            type='button'
-                                            onClick={() => {
-                                                setShowAdvanced((value) => !value)
-                                                setShowTaskMenu(false)
-                                            }}
-                                            className='flex items-center gap-1.5 rounded-xl border border-white/10 bg-black/25 px-3.5 py-2.5 text-xs font-medium text-slate-300 transition hover:border-white/20 hover:bg-black/35'
-                                        >
-                                            <SlidersHorizontal size={13} />
-                                            Advanced Options
-                                            <ChevronDown size={13} className={`transition ${showAdvanced ? "rotate-180" : ""}`} />
-                                        </button>
-
-                                        {showAdvanced && (
-                                            <>
-                                                <div
-                                                    className='fixed inset-0 z-10'
-                                                    onClick={() => setShowAdvanced(false)}
-                                                />
-                                                <div className='absolute bottom-full left-0 z-20 mb-2 w-64 rounded-xl border border-white/10 bg-[#0b111f] p-3 text-xs shadow-2xl shadow-black/50'>
-                                                    <p className='mb-2 text-slate-400'>
-                                                        Modality tags are auto-detected from each file's
-                                                        real metadata. Click a tag on a thumbnail to
-                                                        override it manually.
-                                                    </p>
-                                                    <button
-                                                        type='button'
-                                                        onClick={resetModalities}
-                                                        disabled={!files.length}
-                                                        className='flex w-full items-center gap-1.5 rounded-lg border border-white/10 px-3 py-2 text-left text-slate-300 transition hover:bg-white/5 disabled:cursor-not-allowed disabled:opacity-40'
-                                                    >
-                                                        <RotateCcw size={12} />
-                                                        Reset to auto-detected modality
-                                                    </button>
-                                                </div>
-                                            </>
-                                        )}
-                                    </div>
-
-                                    <div className='relative'>
-                                        <button
-                                            type='button'
-                                            onClick={() => {
-                                                setShowTaskMenu((value) => !value)
-                                                setShowAdvanced(false)
-                                            }}
-                                            className='flex items-center gap-1.5 rounded-xl border border-white/10 bg-black/25 px-3.5 py-2.5 text-xs font-medium text-slate-300 transition hover:border-white/20 hover:bg-black/35'
-                                        >
-                                            {selectedTaskLabel}
-                                            <ChevronDown size={13} className={`transition ${showTaskMenu ? "rotate-180" : ""}`} />
-                                        </button>
-
-                                        {showTaskMenu && (
-                                            <>
-                                                <div
-                                                    className='fixed inset-0 z-10'
-                                                    onClick={() => setShowTaskMenu(false)}
-                                                />
-                                                <div className='absolute bottom-full left-0 z-20 mb-2 w-60 rounded-xl border border-white/10 bg-[#0b111f] p-1.5 shadow-2xl shadow-black/50'>
-                                                    {TASK_OPTIONS.map((option) => (
-                                                        <button
-                                                            type='button'
-                                                            key={option.value}
-                                                            onClick={() => {
-                                                                setTaskOverride(option.value)
-                                                                setShowTaskMenu(false)
-                                                            }}
-                                                            className={`block w-full rounded-lg px-3 py-2 text-left text-xs transition hover:bg-white/5 ${
-                                                                option.value === taskOverride
-                                                                    ? "text-cyan-300"
-                                                                    : "text-slate-300"
-                                                            }`}
-                                                        >
-                                                            {option.label}
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
+                                
 
                                 <button
                                     type='submit'
                                     disabled={submitting}
-                                    className='flex flex-1 items-center justify-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:scale-[1.01] hover:shadow-cyan-500/30 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100'
+                                    className='flex flex-1 items-center justify-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:scale-[1.01] hover:shadow-cyan-500/30 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100 cursor-pointer'
                                 >
                                     <Send className='h-4 w-4' />
                                     {submitting ? "Starting…" : "Analyze Images"}
@@ -800,9 +717,9 @@ const InputState = (props) => {
                         </section>
                     </div>
 
-                    {/* Right column */}
+
                     <div className='space-y-6'>
-                        <div className='relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-b from-white/[0.05] to-white/[0.02] p-5 shadow-xl shadow-black/20'>
+                        <div className='relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-b from-white/5 to-white/2 p-5 shadow-xl shadow-black/20'>
                             <h2 className='mb-4 flex items-center gap-2 text-sm font-semibold text-white'>
                                 <Layers3 size={15} className='text-cyan-300' />
                                 Input Summary
@@ -834,7 +751,7 @@ const InputState = (props) => {
                             <Satellite className='pointer-events-none absolute -bottom-4 -right-4 h-24 w-24 rotate-12 text-cyan-400/10' />
                         </div>
 
-                        <div className='rounded-2xl border border-white/10 bg-linear-to-b from-white/[0.05] to-white/[0.02] p-5 shadow-xl shadow-black/20'>
+                        <div className='rounded-2xl border border-white/10 bg-linear-to-b from-white/5 to-white/2 p-5 shadow-xl shadow-black/20'>
                             <h2 className='mb-4 text-sm font-semibold text-white'>Validation Status</h2>
 
                             <div className='space-y-3'>
@@ -874,7 +791,7 @@ const InputState = (props) => {
                             </div>
                         </div>
 
-                        <div className='rounded-2xl border border-purple-400/15 bg-linear-to-b from-purple-500/[0.06] to-transparent p-5'>
+                        <div className='rounded-2xl border border-purple-400/15 bg-linear-to-b from-purple-500/6 to-transparent p-5'>
                             <div className='flex items-start gap-3'>
                                 <div className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-purple-400/10 text-purple-300'>
                                     <BookOpen size={16} />

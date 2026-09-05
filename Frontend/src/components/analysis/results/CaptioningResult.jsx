@@ -3,9 +3,11 @@ import {
     Brain,
     Activity
 } from 'lucide-react'
+import { getDisplayConfidence } from '../../../utils/Confidence'
 
 const CaptioningResult = (props) => {
     const data = props.result || {}
+    const confidence = getDisplayConfidence(data)
 
     const image =
         data.images?.[0]
@@ -80,11 +82,7 @@ const CaptioningResult = (props) => {
                             </p>
 
                             <p className='mt-2 text-2xl font-semibold text-cyan-300'>
-                                {Math.round(
-                                    (data.confidence ||
-                                        0) * 100
-                                )}
-                                %
+                                {Math.round(confidence * 100)}%
                             </p>
                         </div>
 
