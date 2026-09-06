@@ -7,8 +7,8 @@ from transformers import (
     AutoProcessor,
     BitsAndBytesConfig,
 )
-from models.land_registry import desc
 from peft import PeftModel
+from models.land_registry import desc
 
 
 # ============================================================
@@ -271,8 +271,9 @@ class get_shared_vlm:
         )[0]
 
         output = output_text.strip().upper()
+        
         if desc[output] is not None:
-            return f"{output} : {desc[output]}"
+            return f'{output} : {desc[output]}'
         else:
             desc[output] = None
             return output
@@ -293,10 +294,12 @@ class get_shared_vlm:
                 "Question cannot be empty."
             )
 
+        # Must match the VQA prompt template used in
+        # training/vlm_train.py exactly.
         prompt = (
             "You are a remote sensing AI assistant. "
-            "Analyze the satellite image and answer "
-            "the user's question accurately.\n\n"
+            "Analyze the satellite image and answer the "
+            "question accurately.\n\n"
             f"Question: {question}"
         )
 
@@ -310,17 +313,35 @@ class get_shared_vlm:
     # CAPTIONING
     # ========================================================
 
+    DEFAULT_CAPTION_INSTRUCTION = (
+        "Describe the satellite image in detail, including "
+        "the location, season, and observed land cover."
+    )
+
     def predict_caption(
         self,
         image,
+        instruction=None,
     ):
 
+        instruction = (
+            instruction.strip()
+            if instruction and instruction.strip()
+            else self.DEFAULT_CAPTION_INSTRUCTION
+        )
+
+        # This must match the captioning prompt template used in
+        # training/vlm_train.py exactly (same system framing +
+        # "Instruction: ..." suffix). The LoRA adapter is sensitive
+        # to prompt format - an out-of-distribution prompt causes
+        # it to drift into other tasks' output styles (e.g. the
+        # bounding-box format used for "grounding").
         prompt = (
             "You are a remote sensing AI assistant. "
-            "Provide a detailed description of the "
-            "satellite image. Describe the major "
-            "land-cover types, visible objects, and "
-            "their spatial arrangement."
+            "Describe the satellite image in detail, "
+            "focusing on land cover, objects, and spatial "
+            "relationships.\n\n"
+            f"Instruction: {instruction}"
         )
 
         return self._generate(
@@ -336,10 +357,12 @@ class get_shared_vlm:
     def caption(
         self,
         image,
+        instruction=None,
     ):
 
         return self.predict_caption(
-            image=image
+            image=image,
+            instruction=instruction,
         )
 
     # ========================================================
@@ -369,7 +392,8 @@ class get_shared_vlm:
         if task == "captioning":
 
             return self.predict_caption(
-                image=image
+                image=image,
+                instruction=question,
             )
 
         raise ValueError(

@@ -35,7 +35,7 @@ def load_image(file_path: str) -> tuple[np.ndarray, dict]:
                 "crs": str(src.crs)
                 if src.crs
                 else None,
-                "transform": src.transform,
+                "transform": list(src.transform),
                 "bounds": {
                     "left": src.bounds.left,
                     "bottom": src.bounds.bottom,
@@ -43,7 +43,7 @@ def load_image(file_path: str) -> tuple[np.ndarray, dict]:
                     "top": src.bounds.top,
                 },
                 "resolutions": src.res,
-                "georeferenced" : (src.crs is not None and not src.transform.is_identify)
+                "georeferenced" : (src.crs is not None and not src.transform.is_identity)
             }
 
         return image, metadata

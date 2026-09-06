@@ -32,8 +32,8 @@ const Sidebar = () => {
                 </div>
 
                 <div>
-                    <h1 className="text-[19px] font-semibold tracking-wide text-white">SATQUERY AI</h1>
-                    <p className="text-[10px] text-slate-400">AI for Earth Intelligence</p>
+                    <h1 className="text-[19px] font-semibold tracking-wide text-white">AERIS</h1>
+                    <p className="text-[10px] text-slate-400">Adaptive Earth-observation Reasoning & Intelligence System</p>
                 </div>
             </div>
 

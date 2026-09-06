@@ -1,8 +1,12 @@
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 from models.optical_sar import get_optical_sar_model
 
 
-OPTICAL_IMAGE = "data/samples/test.jpg"
-SAR_IMAGE = "data/samples/test.tiff"
+OPTICAL_IMAGE = "data/samples/opt1.png"
+SAR_IMAGE = "data/samples/sar1.png"
 
 
 def main():

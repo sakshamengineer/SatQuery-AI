@@ -41,8 +41,8 @@ class OpticalSARPreprocessor:
                 "height": src.height,
                 "bands": src.count,
                 "crs": str(src.crs) if src.crs else None,
-                "transform": src.transform,
-                "bounds": src.bounds,
+                "transform": list(src.transform),
+                "bounds": tuple(src.bounds),
                 "dtype": str(src.dtypes[0])
             }
 
