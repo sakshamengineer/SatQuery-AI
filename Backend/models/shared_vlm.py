@@ -7,7 +7,7 @@ from transformers import (
     AutoProcessor,
     BitsAndBytesConfig,
 )
-
+from models.land_registry import desc
 from peft import PeftModel
 
 
@@ -270,7 +270,12 @@ class get_shared_vlm:
             clean_up_tokenization_spaces=False,
         )[0]
 
-        return output_text.strip()
+        output = output_text.strip().upper()
+        if desc[output] is not None:
+            return f"{output} : {desc[output]}"
+        else:
+            desc[output] = None
+            return output
 
     # ========================================================
     # VQA
